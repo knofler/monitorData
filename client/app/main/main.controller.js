@@ -24,6 +24,35 @@ angular.module('serveMeApp')
       $http.delete('/api/things/' + thing._id);
      };
 
+     $scope.formData = {} ;
+
+    $scope.addData    = function() {
+      if($scope.formData === '') {
+        return;
+      }
+      $http.post('/api/datas', { 
+        itemName : $scope.formData.itemName, 
+        timePlot1: new Date(), 
+        timePlot2: new Date(), 
+        timePlot3: new Date(), 
+        timePlot4: new Date(), 
+        timePlot5: new Date(), 
+        func1: $scope.formData.func1,
+        result1: $scope.formData.result1,
+        func2: $scope.formData.func2,
+        result2: $scope.formData.result2,
+        func3: $scope.formData.func3,
+        result3: $scope.formData.result3,
+        func4: $scope.formData.func4,
+        result4: $scope.formData.result4,
+        testerName: $scope.formData.testerName,
+        devicename:$scope.formData.devicename,
+        deviceSpec:$scope.formData.deviceSpec,
+        loginUsed: $scope.formData.loginUsed,
+        logged_date:new Date() 
+      });
+      $scope.formData = '';
+      };
 
   // scroll to feature included for SPA App
     $scope.scrollTo    = function(id) {

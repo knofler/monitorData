@@ -1,26 +1,12 @@
 <!-- ###################### HEADER #################################### -->
 <!-- Toolbars or Navbars -->
 <div ng-include="'components/navbar/navbar.html'"></div>   
-<!-- ********************* Single page applications Smooth scroll menu available ************************* -->
-<div class="container" id="smoothScrollMenu">
-  <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li> <a ng-click="scrollTo('home')" smooth-scroll target="home">Home</a></li>
-        <li> <a ng-click="scrollTo('about')" smooth-scroll target="about"> About</a></li>
-        <li> <a ng-click="scrollTo('services')" smooth-scroll target="services"> Services</a></li>
-        <li> <a ng-click="scrollTo('team')" smooth-scroll target="team">Team</a></li>
-        <li> <a ng-click="scrollTo('portfolio')" smooth-scroll target="portfolio"> Portfolio</a></li>
-        <li> <a ng-click="scrollTo('blog')" smooth-scroll target="blog"> Blog</a></li>
-        <li> <a ng-click="scrollTo('contact')" smooth-scroll target="contact"> Contact</a></li>
-       </ul>
-     </div><!--/.nav-collapse -->
- </div>     
-<!-- ********************* Single page applications Smooth scroll menu available ************************* -->
+
 <!-- header divs and contents -->
 <header class="hero-unit" id="banner">
   <div class="container">
-    <h1>FullStack!</h1>
-    <p class="lead">Rumman's Customized angular fullstack boilerplate.</p>
+    <h1>Monitoring Tool</h1>
+    <p class="lead">Record Data for Analysis</p>
     <!-- <img src="assets/images/yeoman.png" alt="I'm Yeoman"> -->
   </div>
  </header>
@@ -32,56 +18,120 @@
   <div class="row">
     <div class="col-lg-12">
     
+      <div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5 class="text-center">
+                        Test Form</h5>
+                    <form class="form form-signup" role="form">
 
-  <!-- ********************* Single page applications target container ************************* -->
-    <!-- ==== ABOUT ==== -->
-    <div class="container" id="about" name="about">
-        <div class="row white">
-        <br>
-          <h1 class="centered">A LITTLE ABOUT OUR TEAM</h1>
-          <hr>
-          
-          <div class="col-lg-6">
-            <p>We believe ideas come from everyone, everywhere. In fact, at BlackTie, everyone within our agency walls is a designer in their own right. And there are a few principles we believe—and we believe everyone should believe—about our design craft. These truths drive us, motivate us, and ultimately help us redefine the power of design. We’re big believers in doing right by our neighbors. After all, we grew up in the Twin Cities and we believe this place has much to offer. So we do what we can to support the community we love.</p>
-          </div><!-- col-lg-6 -->
-          
-          <div class="col-lg-6">
-            <p>Over the past four years, we’ve provided more than $1 million in combined cash and pro bono support to Way to Grow, an early childhood education and nonprofit organization. Other community giving involvement throughout our agency history includes pro bono work for more than 13 organizations, direct giving, a scholarship program through the Minneapolis College of Art & Design, board memberships, and ongoing participation in the Keystone Club, which gives five percent of our company’s earnings back to the community each year.</p>
-          </div><!-- col-lg-6 -->
-        </div><!-- row -->
-       </div><!-- container -->
-  <!-- ********************* Single page applications target container ************************* -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.itemName" class="form-control" placeholder="Test item" />
+                        </div>
+                    </div>
 
-      
-  <!-- ##############   Inserted polymer paper elements as a demo ################## -->
-    <paper-checkbox></paper-checkbox>
-  <!-- ***************************************************************************** -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.func1" class="form-control" placeholder="Function Name" />
+                        </div>
+                    </div>
 
-  <!-- ##############  Insert polymer custom element whereever you like ############ -->
-    <my-element></my-element>
-  <!-- ***************************************************************************** -->
+                     <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.result1" class="form-control" placeholder="Result" />
+                        </div>
+                    </div>
 
-  <!-- ********************* Socket IO active demonstration ************************* -->
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
-        <li>
-          <a href="#" tooltip="{{thing.info}}">{{thing.name}}
-            <button type="button" class="close" ng-click="deleteThing(thing)">&times;</button>
-          </a>
-        </li>
-       </ul>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.func2" class="form-control" placeholder="Function Name" />
+                        </div>
+                    </div>
+
+                     <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.result2" class="form-control" placeholder="Result" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.func3" class="form-control" placeholder="Function Name" />
+                        </div>
+                    </div>
+
+                     <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.result3" class="form-control" placeholder="Result" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.func4" class="form-control" placeholder="Function Name" />
+                        </div>
+                    </div>
+
+                     <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.result4" class="form-control" placeholder="Result" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.testerName" class="form-control" placeholder="Tester Name" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.deviceName" class="form-control" placeholder="Device Tested" />
+                        </div>
+                    </div>
+
+                     <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.deviceSpec" class="form-control" placeholder="Device Specs" />
+                        </div>
+                    </div>
+
+                     <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" ng-model="formData.loginUsed" class="form-control" placeholder="Login ID used " />
+                        </div>
+                    </div>
+
+                </div>
+                 <button class="btn btn-sm btn-primary btn-block" ng-click="addData()">
+                    SUBMIT
+                    </button>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div> 
+
      </div>
    </div>
-      <form class="thing-form">
-      <label>Syncs in realtime across clients</label>
-      <p class="input-group">
-        <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
-        <span class="input-group-btn">
-          <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
-        </span>
-      </p>
-     </form>
-  <!-- ********************* Socket IO active demonstration ************************* -->
  </div>
 <!-- ################## END OF MAIN CONTAINER ######################### -->
 
