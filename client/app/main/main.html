@@ -176,9 +176,9 @@
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon">SAS</span>
-                            <button class="btn btn-sm btn-primary btn-block" ng-click="traceLaunch('sas')">Launch</button>
-                            <button class="btn btn-sm btn-info btn-block" ng-click="traceWindow('sas')">Window</button>
-                            <button class="btn btn-sm btn-success btn-block" ng-click="traceReady('sas')">Ready</button>
+                            <button class="btn btn-sm btn-danger btn-block" ng-disabled="isLaunch" ng-click="traceLaunch('sas')">Launch</button>
+                            <button class="btn btn-sm btn-warning btn-block" ng-disabled="isWindow" ng-click="traceWindow('sas')">Window</button>
+                            <button class="btn btn-sm btn-success btn-block" ng-disabled="isReady" ng-click="traceReady('sas')">Ready</button>
                         </div>
                     </div>
                </div>

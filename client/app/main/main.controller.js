@@ -74,6 +74,9 @@ angular.module('serveMeApp')
       $anchorScroll();
      };
 
+  $scope.isLaunch = false;    
+  $scope.isReady  = true;
+  $scope.isWindow = true;
 
   // TRACE LOG Functions   
   $scope.traceLaunch = function(itemName){  
@@ -92,12 +95,58 @@ angular.module('serveMeApp')
        itemName : itemName,
        launchCount : launchCount+1,
        launchTime  : new Date()
+      }).success(function(response){
+        console.log("response",response);
+      });
+     console.log("launch data recorded " + launchCount);
+    },300);
+    $scope.isLaunch  = true;
+    $scope.isWindow  = false;
+   };
+  $scope.traceWindow = function(itemName){  
+    var launchCount =0;
+      $http.get('/api/tracelogs/items/').success(function(getLastEntry){
+          console.log(getLastEntry.launchCount)
+          launchCount = getLastEntry.launchCount;
+          if(launchCount == undefined){
+            launchCount = 0;
+          }
+        });
+
+    // add entry to db
+    setTimeout(function(){
+     $http.post("/api/tracelogs/",{
+       itemName : itemName,
+       launchCount : launchCount+1,
+       launchTime  : new Date()
       })
      console.log("launch data recorded " + launchCount);
     },300);
-    
-   };
+    $scope.isWindow  = true;
+    $scope.isReady  = false;
+   }; 
+   $scope.traceReady = function(itemName){  
+    var launchCount =0;
+      $http.get('/api/tracelogs/items/').success(function(getLastEntry){
+          console.log(getLastEntry.launchCount)
+          launchCount = getLastEntry.launchCount;
+          if(launchCount == undefined){
+            launchCount = 0;
+          }
+        });
 
+    // add entry to db
+    setTimeout(function(){
+     $http.post("/api/tracelogs/",{
+       itemName : itemName,
+       launchCount : launchCount+1,
+       launchTime  : new Date()
+      })
+     console.log("launch data recorded " + launchCount);
+    },300);
+    $scope.isReady  = true;
+    $scope.isLaunch  = false;
+   };  
   // ########## Event Controls with socketio #########
   $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
