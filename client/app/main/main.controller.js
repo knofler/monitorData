@@ -74,6 +74,30 @@ angular.module('serveMeApp')
       $anchorScroll();
      };
 
+
+  // TRACE LOG Functions   
+  $scope.traceLaunch = function(itemName){  
+    var launchCount =0;
+      $http.get('/api/tracelogs/items/').success(function(getLastEntry){
+          console.log(getLastEntry.launchCount)
+          launchCount = getLastEntry.launchCount;
+          if(launchCount == undefined){
+            launchCount = 0;
+          }
+        });
+
+    // add entry to db
+    setTimeout(function(){
+     $http.post("/api/tracelogs/",{
+       itemName : itemName,
+       launchCount : launchCount+1,
+       launchTime  : new Date()
+      })
+     console.log("launch data recorded " + launchCount);
+    },300);
+    
+   };
+
   // ########## Event Controls with socketio #########
   $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');

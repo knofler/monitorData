@@ -1,4 +1,4 @@
-<!-- ###################### HEADER #################################### -->
+ <!-- ###################### HEADER ####################################  -->
 <!-- Toolbars or Navbars -->
 <div ng-include="'components/navbar/navbar.html'"></div>   
 
@@ -17,8 +17,10 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
+
+    <!-- ************************ Capture functionality test ***************************** -->
         <!-- Data Capturing Forms -->
-        <div class="col-md-4 topClear">
+      <!--   <div class="col-md-4 topClear">
           <div class="panel panel-default">
               <div class="panel-body">
                 <h5 class="text-center">Test Form</h5>
@@ -118,9 +120,9 @@
                    </form>
                </div>
              </div>
-         </div>
+         </div> -->
         <!-- Captures Data Display -->
-        <div class="col-md-4 topClear">
+       <!--  <div class="col-md-4 topClear">
           
           <div class="table-responsive">  
             <table id="mytable" class="table table-bordred table-striped">             
@@ -162,7 +164,30 @@
               </tbody>  
             </table>  
            </div>
-         </div>   
+         </div>    -->
+    <!-- ********************************************************************************* -->
+
+    <!-- ***************** SPECIFIC APPLICATION TEST ********************************* -->
+     <!-- Data Capturing Forms -->
+        <div class="col-md-4 topClear">
+          <div class="panel panel-default">
+              <div class="panel-body">
+                <h5 class="text-center">SAS Load Test</h5>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">SAS</span>
+                            <button class="btn btn-sm btn-primary btn-block" ng-click="traceLaunch('sas')">Launch</button>
+                            <button class="btn btn-sm btn-info btn-block" ng-click="traceWindow('sas')">Window</button>
+                            <button class="btn btn-sm btn-success btn-block" ng-click="traceReady('sas')">Ready</button>
+                        </div>
+                    </div>
+               </div>
+             </div>
+         </div>
+
+
+    <!-- ****************************************************************************** -->
+
      </div>
    </div>
  </div>
@@ -178,4 +203,4 @@
          <a href="https://github.com/knofler/angular-fullstack-base/issues">Issues</a></p>
   </div>
  </footer>
-<!-- ################## END OF FOOTER ################################# !-->
+<!-- ################## END OF FOOTER ################################# !
