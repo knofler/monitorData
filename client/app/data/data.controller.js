@@ -58,7 +58,19 @@ angular.module('serveMeApp')
 		// console.log(data);
 
 		return data;
-	 }; 
+	 };
+
+	$scope.prepare_tracedata = function (payload){
+		console.log(payload);
+		var data = payload
+		data.forEach(function(d){
+			d.launchCount *= 100;
+			console.log("d",d);
+		})
+		// console.log(data);
+
+		return data;
+	 };  
 
 
     //call table service 
@@ -69,14 +81,18 @@ angular.module('serveMeApp')
     // dataSrv.tableDisplay("/api/things/","JSON",".col-md-12",$scope.prepare_thingsdata,$scope.addThingsColumn);  
 
     //call scatterplot service
+    // setTimeout(function(){
+ 	  // dataSrv.scatterPlotDisplay("assets/dataDir/data.json","JSON","#svg3",$scope.prepare_scatterdata); 
+    // },4200);
+
     setTimeout(function(){
- 	  dataSrv.scatterPlotDisplay("assets/dataDir/data.json","JSON","#svg3",$scope.prepare_scatterdata); 
-    },4200);
+ 	  dataSrv.scatterPlotDisplay("/api/tracelogs/","JSON","#svg3",$scope.prepare_tracedata); 
+    },200);
    
     //call Brush service
-    setTimeout(function(){
-       dataSrv.brushDisplay("assets/dataDir/data.json","JSON","#svg4",$scope.prepare_scatterdata); 
-    },4200);
+    // setTimeout(function(){
+    //    dataSrv.brushDisplay("assets/dataDir/data.json","JSON","#svg4",$scope.prepare_scatterdata); 
+    // },4200);
  	
   	
   }]);

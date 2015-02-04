@@ -85,11 +85,27 @@ angular.module('serveMeApp')
     
     chart.update = update;
       
+
     function update(){  
-      var maxCreated = d3.max(data,function(d){return d.data.created});
-      var minCreated = d3.min(data,function(d){return d.data.created});
-      var minScore  = d3.min(data,function(d){return d.data.score});  
-      var maxScore  = d3.max(data,function(d){return d.data.score});
+      var maxCreated = d3.max(data,function(d){return d.launchCount});
+      var minCreated = d3.min(data,function(d){return d.launchCount});
+      var minScore  = d3.min(data,function(d){
+        var end = new Date (d.endTime);
+        var start = new Date (d.launchTime);
+        var endSec = end.getTime();
+        var launchSec = start.getTime();
+        console.log("score is : ", endSec - launchSec) ;
+        return endSec - launchSec;
+      });  
+      var maxScore  = d3.max(data,function(d){
+        var end = new Date (d.endTime);
+        var start = new Date (d.launchTime);
+        var endSec = end.getTime();
+        var launchSec = start.getTime();
+        console.log("score is : ", endSec - launchSec) ;
+        return endSec - launchSec;
+      });
+      // var minScore = 0, maxScore = 1000;
 
       var createScale = d3.time.scale()
         .domain([minCreated,maxCreated])
@@ -132,7 +148,7 @@ angular.module('serveMeApp')
       // .rangeBands([0,680],0.34);
 
       var xScale = d3.time.scale()
-        .domain(d3.extent(data,function(d){return d.data.created}))
+        .domain(d3.extent(data,function(d){return d.launchCount}))
         .range([0,width]);
 
       g.attr("transform","translate(31,135)")
@@ -146,8 +162,16 @@ angular.module('serveMeApp')
       circles
       .transition()
       .attr({
-        cx:function(d,i){return xScale(d.data.created)},
-        cy:function(d,i){return yScale(d.data.score)},
+        cx:function(d,i){return xScale(d.launchCount)},
+        cy:function(d,i){
+        var end = new Date (d.endTime);
+        var start = new Date (d.launchTime);
+        var endSec = end.getTime();
+        var launchSec = start.getTime();
+        console.log("score is : ", endSec - launchSec) ;
+        var elapsedTime = endSec - launchSec;
+          return yScale(elapsedTime);
+        },
         r:10
       })
 
@@ -209,8 +233,8 @@ angular.module('serveMeApp')
         // update();  
 
       var extent = d3.extent(data, function(d){
-          // console.log("data created",d.data.created)
-          return d.data.created
+          // console.log("data created",d.launchCount)
+          return d.launchCount
          });
       var scale  = d3.scale.linear()
         .domain(extent)
@@ -240,7 +264,7 @@ angular.module('serveMeApp')
       .append("rect").classed("events",true);
 
       rects.attr({
-        x:function(d){return scale(d.data.created)},
+        x:function(d){return scale(d.launchCount)},
         y:0,
         width:1,
         height:height
@@ -250,7 +274,7 @@ angular.module('serveMeApp')
         console.log(brush.extent())
         var ext = brush.extent();
         var filtered = data.filter(function(d){
-          return (d.data.created > ext[0] && d.data.created < ext[1]);
+          return (d.launchCount > ext[0] && d.launchCount < ext[1]);
          });
         g.selectAll("rect.events")
         .style({"stroke":"#fff"});
@@ -345,7 +369,7 @@ angular.module('serveMeApp')
      d3.json(url,function(err,payload){
       // capture data in a avariable    
       data = prepareData(payload);
-
+      console.log("data coming ", data)
      });
     } else if (dataType == "CSV"){
 
