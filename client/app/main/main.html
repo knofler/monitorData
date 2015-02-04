@@ -181,6 +181,11 @@
                             <button class="btn btn-sm btn-success btn-block" ng-disabled="isReady" ng-click="traceReady('sas')">Ready</button>
                         </div>
                     </div>
+                    <div id="clickStatus">
+                     <span ng-hide="isWindow">Your click for launch status being logged</span>
+                      <span ng-hide="isReady">Your click for window tracing being logged</span>
+                      <span ng-hide="isLaunch">Your click for Ready status being logged</span>
+                    </div>
                </div>
              </div>
          </div>
