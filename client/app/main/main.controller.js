@@ -5,12 +5,16 @@ angular.module('serveMeApp')
     
   // @@@@@@@@@@@@@@@@@@@ DATA SOURCES and Models @@@@@@@@@@@@@@@@@@@@@@@
     $scope.awesomeThings = [];
+    $scope.dataRepo = '';
+
 
   // ########## API CALLS and Promises #################
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
       socket.syncUpdates('thing', $scope.awesomeThings);
       });
+
+
     
     // Functions interating with api calls and rendering pages
     $scope.addThing    = function() {
@@ -24,7 +28,17 @@ angular.module('serveMeApp')
       $http.delete('/api/things/' + thing._id);
      };
 
-     $scope.formData = {} ;
+    $scope.formData = {} ;
+
+
+   $http.get('api/datas/').success(function(getData){
+      $scope.dataRepo = getData;
+      socket.syncUpdates('data',$scope.dataRepo);
+    }); 
+
+    $scope.setTotalItems = function(){
+      $scope.totalItems = $scope.dataRepo.length;
+    };
 
     $scope.addData    = function() {
       if($scope.formData === '') {

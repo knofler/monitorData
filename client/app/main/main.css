@@ -37,3 +37,6 @@
 .table-sortable tbody tr {
     cursor: move;
 }
+.topClear{
+  margin-top: 30px;  
+}
