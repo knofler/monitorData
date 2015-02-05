@@ -391,8 +391,39 @@ angular.module('serveMeApp')
         // console.log(hovered)
         $rootScope.table.highlight(hovered);
       });   
-    },2000)
+    },200)
     };
+
+    $rootScope.updateGraph = function(url,dataType,targetDiv,prepareData){
+     var data = ''; 
+
+     if(dataType == "JSON"){
+       d3.json(url,function(err,payload){
+        // capture data in a avariable    
+        data = prepareData(payload);
+        // console.log("data coming ", data)
+       });
+      } else if (dataType == "CSV"){
+
+        
+       }   
+       setTimeout(function(){
+       var svg = d3.select(targetDiv)
+       //scatter plot
+       // $rootScope.sgroup = svg.append("g");
+       $rootScope.scatter = d3.chart.scatter();
+       // console.log("check data ", data);
+       $rootScope.scatter.data(data);
+       $rootScope.scatter($rootScope.sgroup); 
+       // arbitary highlight ten scatter plot
+       // $rootScope.scatter.highlight(data.slice(0,10));
+       $rootScope.scatter.on("hover",function(hovered){
+          // console.log(hovered)
+          $rootScope.table.highlight(hovered);
+        });   
+      },200)
+    }; 
+
   $rootScope.brushDisplay       = function (url,dataType,targetDiv,prepareData){
    var data = ''; 
 
@@ -600,6 +631,7 @@ angular.module('serveMeApp')
     tableDisplay        : $rootScope.tableDisplay,
     scatterPlotDisplay  : $rootScope.scatterPlotDisplay,
     brushDisplay        : $rootScope.brushDisplay,
+    updateGraph         : $rootScope.updateGraph 
   }
 
   }]);

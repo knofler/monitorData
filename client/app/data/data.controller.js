@@ -91,8 +91,8 @@ angular.module('serveMeApp')
 	 },200);	
 
 	 socket.socket.on('changeGraph',function(data){
-	 	// console.log("data recieved on update model ", data.sockMsg.data);
-	 	 dataSrv.scatterPlotDisplay('/api/tracelogs/',"JSON","#svg3",$scope.prepare_tracedata); 
+	 	console.log("data recieved on update model ", data.sockMsg.data);
+	 	dataSrv.updateGraph('/api/tracelogs/',"JSON","#svg3",$scope.prepare_tracedata);
 	 })
 
   //    socket.on('data', function(streamData) {
