@@ -163,8 +163,8 @@ angular.module('serveMeApp')
 
       // ************************************* Label **************************************
     var circleData = [
-       { "cx": 20, "cy": -100, "radius": 8, "color" : "green" },
-        { "cx": 20, "cy": -70, "radius": 8, "color" : "blue" }];
+       { "cx": 20, "cy": -100, "radius": 8, "color" : "green" ,"msg" : "Elapsed time"},
+        { "cx": 20, "cy": -70, "radius": 8, "color" : "blue"  ,"msg" : "Mid time"}];
 
     var circlesLabel = g.selectAll("circle")
       .data(circleData)
@@ -179,19 +179,19 @@ angular.module('serveMeApp')
      .style("fill", function (d) { return d.color; });   
 
      //Add the SVG Text Element to the svgContainer
-    var text = g.selectAll("text")
+    var text = g.selectAll("texts")
         .data(circleData)
         .enter()
         .append("text");
 
         //Add SVG Text Element Attributes
     var textLabels = text
-        .attr("x", function(d) { return d.cx; })
-        .attr("y", function(d) { return d.cy; })
-        .text( function (d) { return "( " + d.cx + ", " + d.cy +" )"; })
+        .attr("x", function(d) { return d.cx+14; })
+        .attr("y", function(d) { return d.cy+6; })
+        .text( function (d) { return " - " + d.msg })
         .attr("font-family", "sans-serif")
         .attr("font-size", "20px")
-        .attr("fill", "red");
+        .attr("fill", "#444");
 
 
 
