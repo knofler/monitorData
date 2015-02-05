@@ -163,8 +163,8 @@ angular.module('serveMeApp')
 
       // ************************************* Label **************************************
     var circleData = [
-       { "cx": 20, "cy": 20, "radius": 20, "color" : "green" },
-        { "cx": 70, "cy": 70, "radius": 20, "color" : "purple" }];
+       { "cx": 20, "cy": -100, "radius": 8, "color" : "green" },
+        { "cx": 20, "cy": -70, "radius": 8, "color" : "blue" }];
 
     var circlesLabel = g.selectAll("circle")
       .data(circleData)
