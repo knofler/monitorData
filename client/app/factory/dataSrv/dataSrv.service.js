@@ -108,7 +108,7 @@ angular.module('serveMeApp')
       });
       // var minScore = 0, maxScore = 1000;
 
-      var createScale = d3.time.scale()
+      var createScaleA = d3.time.scale()
         .domain([minCreated,maxCreated])
         .range([cx,width]);
 
@@ -122,7 +122,7 @@ angular.module('serveMeApp')
       .range([height,cy]);
 
       var xAxis = d3.svg.axis()
-        .scale(createScale)
+        .scale(createScaleA)
         .ticks(4)
         .tickFormat(d3.time.format("%x,%H:%M"));
 
@@ -152,42 +152,78 @@ angular.module('serveMeApp')
         .domain(d3.extent(data,function(d){return d.launchCount}))
         .range([0,width]);
 
-      g.attr("transform","translate(31,135)")
+      g.attr("transform","translate(101,135)")
 
-      var circles = g.selectAll("circle")
+      var circlesA = g.selectAll("circle")
       .data(data);
 
-      circles.enter()
+      var circlesB = g.selectAll("circle")
+      .data(data);
+
+      circlesA.enter()
       .append("circle");  
 
-      circles
-      .transition()
+      circlesA.transition()
       .attr({
         cx:function(d,i){
           // console.log("d.launchCount" , d.launchCount); 
           return xScale(d.launchCount)},
         cy:function(d,i){
-        var end = new Date (d.endTime);
-        var start = new Date (d.launchTime);
-        var endSec = end.getTime()/1000;
-        var launchSec = start.getTime()/1000;
-        // console.log("score is : ", endSec - launchSec) ;
-        var elapsedTime = endSec - launchSec;
+          var end = new Date (d.endTime);
+          var start = new Date (d.launchTime);
+          var endSec = end.getTime()/1000;
+          var launchSec = start.getTime()/1000;
+          // console.log("score is : ", endSec - launchSec) ;
+          var elapsedTime = endSec - launchSec;
           return yScale(elapsedTime);
         },
-        r:5
+        r:4
       })
+      .style("fill","green");
 
-      circles.exit().remove();
+      circlesA.exit().remove();
 
-      circles.on("mouseover",function(d){
+      circlesA.on("mouseover",function(d){
         d3.select(this).style("fill","orange");
         dispatch.hover([d]);
       });
-      circles.on("mouseout",function(d){
-        d3.select(this).style("fill","")
+      circlesA.on("mouseout",function(d){
+        d3.select(this).style("fill","green")
         dispatch.hover([]);
       });
+
+    circlesB.enter()
+      .append("circle");  
+
+      circlesB.transition()
+      .attr({
+        cx:function(d,i){
+          // console.log("d.launchCount" , d.launchCount); 
+          return xScale(d.launchCount)},
+        cy:function(d,i){
+          var mid = new Date (d.midTime);
+          var start = new Date (d.launchTime);
+          var midSec = mid.getTime()/1000;
+          var launchSec = start.getTime()/1000;
+          // console.log("score is : ", endSec - launchSec) ;
+          var elapsedTime = midSec - launchSec;
+          return yScale(elapsedTime);
+        },
+        r:4
+      })
+      .style("fill","blue");
+
+      circlesB.exit().remove();
+
+      circlesB.on("mouseover",function(d){
+        d3.select(this).style("fill","pink");
+        dispatch.hover([d]);
+      });
+      circlesB.on("mouseout",function(d){
+        d3.select(this).style("fill","blue")
+        dispatch.hover([]);
+      });
+
      };
 
     chart.highlight = function(data){
