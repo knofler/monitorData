@@ -64,7 +64,7 @@ angular.module('serveMeApp')
 		console.log(payload);
 		var data = payload
 		data.forEach(function(d){
-			d.launchCount *= 100;
+			// d.launchCount *= 100;
 			console.log("d",d);
 		})
 		// console.log(data);

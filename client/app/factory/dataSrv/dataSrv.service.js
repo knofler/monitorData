@@ -66,7 +66,7 @@ angular.module('serveMeApp')
      };
   d3.chart.scatter = function (){
     var g,data;
-    var width = 400, height = 70;
+    var width = 800, height = 70;
     var cx = 10;
         var dispatch = d3.dispatch(chart,"hover");
     //reusable chart pattern
@@ -87,21 +87,27 @@ angular.module('serveMeApp')
       
 
     function update(){  
-      var maxCreated = d3.max(data,function(d){return d.launchCount});
-      var minCreated = d3.min(data,function(d){return d.launchCount});
+      var maxCreated = d3.max(data,function(d){
+         var launchTime = new Date(d.launchTime);
+        return launchTime;
+      });
+      var minCreated = d3.min(data,function(d){
+        var launchTime = new Date(d.launchTime);
+        return launchTime;
+      });
       var minScore  = d3.min(data,function(d){
         var end = new Date (d.endTime);
         var start = new Date (d.launchTime);
-        var endSec = end.getTime();
-        var launchSec = start.getTime();
+        var endSec = end.getTime()/1000;
+        var launchSec = start.getTime()/1000;
         console.log("score is : ", endSec - launchSec) ;
         return endSec - launchSec;
       });  
       var maxScore  = d3.max(data,function(d){
         var end = new Date (d.endTime);
         var start = new Date (d.launchTime);
-        var endSec = end.getTime();
-        var launchSec = start.getTime();
+        var endSec = end.getTime()/1000;
+        var launchSec = start.getTime()/1000;
         console.log("score is : ", endSec - launchSec) ;
         return endSec - launchSec;
       });
@@ -162,17 +168,17 @@ angular.module('serveMeApp')
       circles
       .transition()
       .attr({
-        cx:function(d,i){return xScale(d.launchCount)},
+        cx:function(d,i){console.log("d.launchCount" , d.launchCount); return xScale(d.launchCount)},
         cy:function(d,i){
         var end = new Date (d.endTime);
         var start = new Date (d.launchTime);
-        var endSec = end.getTime();
-        var launchSec = start.getTime();
+        var endSec = end.getTime()/1000;
+        var launchSec = start.getTime()/1000;
         console.log("score is : ", endSec - launchSec) ;
         var elapsedTime = endSec - launchSec;
           return yScale(elapsedTime);
         },
-        r:10
+        r:5
       })
 
       circles.exit().remove();
@@ -192,7 +198,7 @@ angular.module('serveMeApp')
       .style("stroke","")
       .style("stroke-width",3)
 
-      circles.data(data,function(d){return d.data.id})
+      circles.data(data,function(d){return d.launchCount})
       .style("stroke","green")
       .style("stroke-width",4);
 
