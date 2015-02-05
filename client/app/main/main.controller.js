@@ -83,7 +83,7 @@ angular.module('serveMeApp')
   $scope.traceLaunch = function (itemName){  
     var launchCount =0;
       $http.get('/api/tracelogs/items/').success(function(getLastEntry){
-          console.log(getLastEntry.launchCount)
+          // console.log(getLastEntry.launchCount)
           launchCount = getLastEntry.launchCount;
           if(launchCount == undefined){
             launchCount = 0;
@@ -97,17 +97,17 @@ angular.module('serveMeApp')
        launchCount : launchCount+1,
        launchTime  : new Date()
       }).success(function(response){
-        console.log("response",response._id);
+        // console.log("response",response._id);
         $scope.lastItem_id = response._id;
       });
-     console.log("launch data recorded " + launchCount);
+     // console.log("launch data recorded " + launchCount);
     },300);
     $scope.isLaunch  = true;
     $scope.isWindow  = false;
     $("#clickStatus").show();
    };
   $scope.traceWindow = function (itemName){  
-    console.log("now last id is : " , $scope.lastItem_id);
+    // console.log("now last id is : " , $scope.lastItem_id);
     var targetId =  $scope.lastItem_id ;
     // update window open time for tagetId to db
      $http.put("/api/tracelogs/"+targetId,{
@@ -117,12 +117,16 @@ angular.module('serveMeApp')
     $scope.isReady  = false;
    }; 
   $scope.traceReady  = function (itemName){  
-    console.log("now last id is : " , $scope.lastItem_id);
+    // console.log("now last id is : " , $scope.lastItem_id);
     var targetId =  $scope.lastItem_id ;
     // update window open time for tagetId to db
      $http.put("/api/tracelogs/"+targetId,{
        endTime: new Date() 
-      })
+      }).success(function(response){
+        console.log("Ready response is available : " , response );
+        console.log("emit dataUpdate event now");
+        socket.socket.emit('dataUpdate',{data:"hello"});
+      });
 
     $scope.isReady  = true;
     $scope.isLaunch  = false;

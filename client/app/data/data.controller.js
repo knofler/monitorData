@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('serveMeApp')
-  .controller('DataCtrl',['$scope','dataSrv', function ($scope,dataSrv) {
+  .controller('DataCtrl',['$scope','dataSrv','$http','socket', function ($scope,dataSrv,$http,socket) {
 
   	$scope.prepare_Redditdata = function (payload){
 		var data = payload.data.children;
@@ -61,11 +61,11 @@ angular.module('serveMeApp')
 	 };
 
 	$scope.prepare_tracedata = function (payload){
-		console.log(payload);
+		// console.log(payload);
 		var data = payload
 		data.forEach(function(d){
 			// d.launchCount *= 100;
-			console.log("d",d);
+			// console.log("d",d);
 		})
 		// console.log(data);
 
@@ -85,9 +85,21 @@ angular.module('serveMeApp')
  	  // dataSrv.scatterPlotDisplay("assets/dataDir/data.json","JSON","#svg3",$scope.prepare_scatterdata); 
     // },4200);
 
-    setTimeout(function(){
- 	  dataSrv.scatterPlotDisplay("/api/tracelogs/","JSON","#svg3",$scope.prepare_tracedata); 
-    },200);
+
+     setTimeout(function(){
+	  dataSrv.scatterPlotDisplay('/api/tracelogs/',"JSON","#svg3",$scope.prepare_tracedata); 
+	 },200);	
+
+	 socket.socket.on('changeGraph',function(data){
+	 	// console.log("data recieved on update model ", data.sockMsg.data);
+	 	 dataSrv.scatterPlotDisplay('/api/tracelogs/',"JSON","#svg3",$scope.prepare_tracedata); 
+	 })
+
+  //    socket.on('data', function(streamData) {
+  // 		setTimeout(function(){
+ 	//   	dataSrv.scatterPlotDisplay('/api/tracelogs/',"JSON","#svg3",$scope.prepare_tracedata); 
+  //   	},200);	
+	 // });
    
     //call Brush service
     // setTimeout(function(){

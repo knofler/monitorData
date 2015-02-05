@@ -68,24 +68,18 @@ angular.module('serveMeApp')
     var g,data;
     var width = 800, height = 70;
     var cx = 10;
-        var dispatch = d3.dispatch(chart,"hover");
+    var dispatch   = d3.dispatch(chart,"hover");
     //reusable chart pattern
     function chart (container){
       //initialization code
       g = container;
-
-      g.append("g")
-      .classed("xaxis",true);
-
-      g.append("g")
-      .classed("yaxis",true);
-
+      g.append("g").classed("xaxis",true);
+      g.append("g").classed("yaxis",true);
       update();
       };
     
     chart.update = update;
-      
-
+  
     function update(){  
       var maxCreated = d3.max(data,function(d){
          var launchTime = new Date(d.launchTime);
@@ -100,7 +94,7 @@ angular.module('serveMeApp')
         var start = new Date (d.launchTime);
         var endSec = end.getTime()/1000;
         var launchSec = start.getTime()/1000;
-        console.log("score is : ", endSec - launchSec) ;
+        // console.log("score is : ", endSec - launchSec) ;
         return endSec - launchSec;
       });  
       var maxScore  = d3.max(data,function(d){
@@ -108,7 +102,7 @@ angular.module('serveMeApp')
         var start = new Date (d.launchTime);
         var endSec = end.getTime()/1000;
         var launchSec = start.getTime()/1000;
-        console.log("score is : ", endSec - launchSec) ;
+        // console.log("score is : ", endSec - launchSec) ;
         return endSec - launchSec;
       });
       // var minScore = 0, maxScore = 1000;
@@ -168,13 +162,15 @@ angular.module('serveMeApp')
       circles
       .transition()
       .attr({
-        cx:function(d,i){console.log("d.launchCount" , d.launchCount); return xScale(d.launchCount)},
+        cx:function(d,i){
+          // console.log("d.launchCount" , d.launchCount); 
+          return xScale(d.launchCount)},
         cy:function(d,i){
         var end = new Date (d.endTime);
         var start = new Date (d.launchTime);
         var endSec = end.getTime()/1000;
         var launchSec = start.getTime()/1000;
-        console.log("score is : ", endSec - launchSec) ;
+        // console.log("score is : ", endSec - launchSec) ;
         var elapsedTime = endSec - launchSec;
           return yScale(elapsedTime);
         },
@@ -203,17 +199,17 @@ angular.module('serveMeApp')
       .style("stroke-width",4);
 
       };
-    chart.data   = function(value){
+    chart.data      = function(value){
       if(!arguments.length) return data;
       data = value;
       return chart;
      };
-    chart.width  = function(value){
+    chart.width     = function(value){
       if(!arguments.length) return width;
       width = value;
       return chart;
      };
-    chart.height = function(value){
+    chart.height    = function(value){
       if(!arguments.length) return height;
       height = value;
       return chart;
@@ -375,7 +371,7 @@ angular.module('serveMeApp')
      d3.json(url,function(err,payload){
       // capture data in a avariable    
       data = prepareData(payload);
-      console.log("data coming ", data)
+      // console.log("data coming ", data)
      });
     } else if (dataType == "CSV"){
 
@@ -459,7 +455,6 @@ angular.module('serveMeApp')
 
      });
    }; 
-
 
   // *********************BAR CHARTS******************************
 
@@ -602,9 +597,9 @@ angular.module('serveMeApp')
   //  });
 
   return {
-    tableDisplay    : $rootScope.tableDisplay,
+    tableDisplay        : $rootScope.tableDisplay,
     scatterPlotDisplay  : $rootScope.scatterPlotDisplay,
-    brushDisplay    : $rootScope.brushDisplay
+    brushDisplay        : $rootScope.brushDisplay,
   }
 
   }]);
