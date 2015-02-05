@@ -124,7 +124,8 @@ angular.module('serveMeApp')
       var xAxis = d3.svg.axis()
         .scale(createScaleA)
         .ticks(4)
-        .tickFormat(d3.time.format("%x,%H:%M"));
+        .tickFormat(d3.time.format("%H:%M"));
+        // .tickFormat(d3.time.format("%x,%H:%M"));
 
       var yAxis = d3.svg.axis()
         .scale(yScale)
@@ -152,13 +153,51 @@ angular.module('serveMeApp')
         .domain(d3.extent(data,function(d){return d.launchCount}))
         .range([0,width]);
 
-      g.attr("transform","translate(101,135)")
+      g.attr("transform","translate(101,135)");
 
       var circlesA = g.selectAll("circle")
       .data(data);
 
       var circlesB = g.selectAll("circle")
-      .data(data);
+      .data(data);  
+
+      // ************************************* Label **************************************
+    var circleData = [
+       { "cx": 20, "cy": 20, "radius": 20, "color" : "green" },
+        { "cx": 70, "cy": 70, "radius": 20, "color" : "purple" }];
+
+    var circlesLabel = g.selectAll("circle")
+      .data(circleData)
+      .enter()
+      .append("circle");
+
+    //Add the circle attributes
+    var circleAttributes = circlesLabel
+     .attr("cx", function (d) { return d.cx; })
+     .attr("cy", function (d) { return d.cy; })
+     .attr("r", function (d) { return d.radius; })
+     .style("fill", function (d) { return d.color; });   
+
+     //Add the SVG Text Element to the svgContainer
+    var text = g.selectAll("text")
+        .data(circleData)
+        .enter()
+        .append("text");
+
+        //Add SVG Text Element Attributes
+    var textLabels = text
+        .attr("x", function(d) { return d.cx; })
+        .attr("y", function(d) { return d.cy; })
+        .text( function (d) { return "( " + d.cx + ", " + d.cy +" )"; })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "20px")
+        .attr("fill", "red");
+
+
+
+
+
+      // ***************************************** A ************************************
 
       circlesA.enter()
       .append("circle");  
@@ -192,6 +231,9 @@ angular.module('serveMeApp')
         dispatch.hover([]);
       });
 
+
+      // ******************************************* B **********************************************
+    
     circlesB.enter()
       .append("circle");  
 
@@ -224,7 +266,10 @@ angular.module('serveMeApp')
         dispatch.hover([]);
       });
 
-     };
+
+
+
+  };
 
     chart.highlight = function(data){
       var circles = g.selectAll("circle")
