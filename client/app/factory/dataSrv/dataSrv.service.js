@@ -66,8 +66,9 @@ angular.module('serveMeApp')
      };
   d3.chart.scatter = function (){
     var g,data;
-    var width = 800, height = 70;
-    var cx = 10;
+    var width = 500, height = 200;
+    var cx = 0,cy=0;
+
     var dispatch   = d3.dispatch(chart,"hover");
     //reusable chart pattern
     function chart (container){
@@ -117,17 +118,17 @@ angular.module('serveMeApp')
         .interpolate(d3.interpolateHcl)
 
       var yScale  = d3.scale.linear()
-      .domain([0,maxScore])
-      .range([height,cx]);
+      .domain([0,maxScore+50])
+      .range([height,cy]);
 
       var xAxis = d3.svg.axis()
         .scale(createScale)
-        .ticks(3)
+        .ticks(4)
         .tickFormat(d3.time.format("%x,%H:%M"));
 
       var yAxis = d3.svg.axis()
         .scale(yScale)
-        .ticks(3)
+        .ticks(10)
         .orient("left");
 
       var xg = g.select(".xaxis")
