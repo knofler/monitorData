@@ -64,8 +64,8 @@ angular.module('serveMeApp')
 		// console.log(payload);
 		var data = payload
 		data.forEach(function(d){
-			// d.launchCount *= 100;
-			// console.log("d",d);
+			d.launchCount *= 100;
+			console.log("d",d);
 		})
 		// console.log(data);
 
@@ -87,7 +87,7 @@ angular.module('serveMeApp')
 
 
      setTimeout(function(){
-	  dataSrv.scatterPlotDisplay('/api/tracelogs/',"JSON","#svg3",$scope.prepare_tracedata); 
+	  dataSrv.scatterPlotDisplay('/api/tracelogs/',"JSON","#svg1",$scope.prepare_tracedata); 
 	 },200);	
 
 	 socket.socket.on('changeGraph',function(data){

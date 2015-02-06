@@ -1,6 +1,9 @@
 #svg4{
-	width: 800px;
-
+	width: 700px;
+}
+#svg1{
+	height: 100px;
+	padding: 0px;
 }
 #scatterPlot{
 	width: 800px;
@@ -10,6 +13,7 @@
 #svg3{
 	width: 700px;
 	height: 380px;
+	padding-top: 0px;
 }
 .axis{
 	font-size: 10px;
