@@ -112,7 +112,11 @@ angular.module('serveMeApp')
     // update window open time for tagetId to db
      $http.put("/api/tracelogs/"+targetId,{
        midTime: new Date() 
-      })
+      }).success(function(response){
+        console.log("Ready response is available : " , response );
+        console.log("emit dataUpdate event now");
+        socket.socket.emit('dataBUpdate',{data:"hello"});
+      });
     $scope.isWindow  = true;
     $scope.isReady  = false;
    }; 
@@ -124,8 +128,8 @@ angular.module('serveMeApp')
        endTime: new Date() 
       }).success(function(response){
         console.log("Ready response is available : " , response );
-        console.log("emit dataUpdate event now");
-        socket.socket.emit('dataUpdate',{data:"hello"});
+        console.log("emit dataAUpdate event now");
+        socket.socket.emit('dataAUpdate',{data:"hello"});
       });
 
     $scope.isReady  = true;

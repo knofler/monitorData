@@ -133,7 +133,7 @@ d3.chart.scatterAplot = function (){
 
       var xScale = d3.time.scale()
         .domain(d3.extent(data,function(d){return d.launchCount}))
-        .range([0,width]);
+        .range([101,width]);
 
       g.attr("transform","translate(101,15)");
 
@@ -152,7 +152,7 @@ d3.chart.scatterAplot = function (){
       .attr({
         cx:function(d,i){
           // console.log("d.launchCount" , d.launchCount); 
-          return xScale(d.launchCount+2)},
+          return xScale(d.launchCount)},
         cy:function(d,i){
           var end = new Date (d.endTime);
           var start = new Date (d.launchTime);
@@ -199,6 +199,153 @@ d3.chart.scatterAplot = function (){
     // return chart;
       return d3.rebind(chart,dispatch,"on");
    };  
+d3.chart.scatterBplot = function (){
+    var g,data;
+    var width = 500, height = 200;
+    var cx = 0,cy=0;
+
+    var dispatch   = d3.dispatch(chart,"hover");
+    //reusable chart pattern
+    function chart (container){
+      //initialization code
+      g = container;
+      g.append("g").classed("xaxis",true);
+      g.append("g").classed("yaxis",true);
+      update();
+      };
+    
+    chart.update = update;
+  
+    function update(){  
+      var maxCreated = d3.max(data,function(d){
+         var launchTime = new Date(d.launchTime);
+        return launchTime;
+      });
+      var minCreated = d3.min(data,function(d){
+        var launchTime = new Date(d.launchTime);
+        return launchTime;
+      });
+      var minScore  = d3.min(data,function(d){
+        var end = new Date (d.endTime);
+        var start = new Date (d.launchTime);
+        var endSec = end.getTime()/1000;
+        var launchSec = start.getTime()/1000;
+        // console.log("score is : ", endSec - launchSec) ;
+        return endSec - launchSec;
+      });  
+      var maxScore  = d3.max(data,function(d){
+        var end = new Date (d.endTime);
+        var start = new Date (d.launchTime);
+        var endSec = end.getTime()/1000;
+        var launchSec = start.getTime()/1000;
+        // console.log("score is : ", endSec - launchSec) ;
+        return endSec - launchSec;
+      });
+      // var minScore = 0, maxScore = 1000;
+
+      var createScaleA = d3.time.scale()
+        .domain([minCreated,maxCreated])
+        .range([cx,width]);
+
+      var colorScale = d3.scale.linear()
+        .domain([minCreated,maxCreated])
+        .range(["#D5E9E5","#12882A"])
+        .interpolate(d3.interpolateHcl)
+
+      var yScale  = d3.scale.linear()
+      .domain([0,maxScore+50])
+      .range([height,cy]);
+
+      var xAxis = d3.svg.axis()
+        .scale(createScaleA)
+        .ticks(4)
+        .tickFormat(d3.time.format("%H:%M"));
+        // .tickFormat(d3.time.format("%x,%H:%M"));
+
+      var yAxis = d3.svg.axis()
+        .scale(yScale)
+        .ticks(10)
+        .orient("left");
+
+      var xg = g.select(".xaxis")
+            .classed("axis",true)
+          .attr("transform","translate(" + [0,height] + ")")
+          .transition()
+          .call(xAxis);
+
+      var yg = g.select(".yaxis")
+          .classed("axis",true)
+          .classed("yAxis",true)
+          .attr("transform","translate(" + [cx - 5.0] + ")")
+          .transition()
+          .call(yAxis);
+
+      var xScale = d3.time.scale()
+        .domain(d3.extent(data,function(d){return d.launchCount}))
+        .range([102,width]);
+
+      g.attr("transform","translate(101,150)");
+
+      var circlesB = g.selectAll("circle")
+      .data(data);
+
+       //   // ******************************************* B **********************************************
+    
+    circlesB.enter()
+      .append("circle");  
+
+      circlesB.transition()
+      .attr({
+        cx:function(d,i){
+          // console.log("d.launchCount" , d.launchCount); 
+          return xScale(d.launchCount)},
+        cy:function(d,i){
+          var mid = new Date (d.midTime);
+          var start = new Date (d.launchTime);
+          var midSec = mid.getTime()/1000;
+          var launchSec = start.getTime()/1000;
+          // console.log("score is : ", endSec - launchSec) ;
+          var elapsedTime = midSec - launchSec;
+          console.log("elapsedTime is : ", elapsedTime);
+          return yScale(elapsedTime);
+        },
+        r:4
+      })
+      .style("fill","blue");
+
+      circlesB.exit().remove();
+
+      circlesB.on("mouseover",function(d){
+        d3.select(this).style("fill","red");
+        dispatch.hover([d]);
+      });
+      circlesB.on("mouseout",function(d){
+        d3.select(this).style("fill","blue")
+        dispatch.hover([]);
+      });
+   
+   };
+
+    chart.highlight = function(data){
+      var circles = g.selectAll("circle")
+      .style("stroke","")
+      .style("stroke-width",3)
+
+      circles.data(data,function(d){return d.launchCount})
+      .style("stroke","green")
+      .style("stroke-width",4);
+
+      };
+    chart.data      = function(value){
+      if(!arguments.length) return data;
+      data = value;
+      return chart;
+     };
+
+    
+    // return chart;
+      return d3.rebind(chart,dispatch,"on");
+   };     
 d3.chart.scatter      = function (){
     var g,data;
     var width = 500, height = 200;
@@ -426,7 +573,7 @@ $rootScope.scatterPlotDisplay = function (url,dataType,targetDiv,prepareData){
       });   
     },200)
     };
-$rootScope.updateGraph = function(url,dataType,targetDiv,prepareData){
+$rootScope.updateGraphA = function(url,dataType,targetDiv,prepareData){
  var data = ''; 
 
  if(dataType == "JSON"){
@@ -440,18 +587,47 @@ $rootScope.updateGraph = function(url,dataType,targetDiv,prepareData){
     
    }   
    setTimeout(function(){
-   var svg = d3.select(targetDiv)
+   var svgA = d3.select(targetDiv)
    //scatter plot
-   $rootScope.sgroupA  = svg.append("g");
+   // $rootScope.sgroupA  = svg.append("g");
    $rootScope.scatterA = d3.chart.scatterAplot();
    // console.log("check data ", data);
    $rootScope.scatterA.data(data);
-   $rootScope.scatterA(svg); 
+   $rootScope.scatterA(svgA); 
    // arbitary highlight ten scatter plot
    // $rootScope.scatter.highlight(data.slice(0,10));
-   $rootScope.scatter.on("hover",function(hovered){
+   $rootScope.scatterA.on("hover",function(hovered){
       // console.log(hovered)
-      $rootScope.table.highlight(hovered);
+   
+    });   
+  },200)
+  }; 
+$rootScope.updateGraphB = function(url,dataType,targetDiv,prepareData){
+ var data = ''; 
+
+ if(dataType == "JSON"){
+   d3.json(url,function(err,payload){
+    // capture data in a avariable    
+    data = prepareData(payload);
+    // console.log("data coming ", data)
+   });
+  } else if (dataType == "CSV"){
+
+    
+   }   
+   setTimeout(function(){
+   var svgB = d3.select(targetDiv)
+   //scatter plot
+   // $rootScope.sgroupB  = svg.append("g");
+   $rootScope.scatterB = d3.chart.scatterBplot();
+   // console.log("check data ", data);
+   $rootScope.scatterB.data(data);
+   $rootScope.scatterB(svgB); 
+   // arbitary highlight ten scatter plot
+   // $rootScope.scatter.highlight(data.slice(0,10));
+   $rootScope.scatterB.on("hover",function(hovered){
+      // console.log(hovered)
+ 
     });   
   },200)
   }; 
@@ -459,7 +635,8 @@ $rootScope.updateGraph = function(url,dataType,targetDiv,prepareData){
   
 return {
   scatterPlotDisplay  : $rootScope.scatterPlotDisplay,
-  updateGraph         : $rootScope.updateGraph 
+  updateGraphA         : $rootScope.updateGraphA,
+  updateGraphB         : $rootScope.updateGraphB  
  }
 
   }]);

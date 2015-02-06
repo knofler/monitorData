@@ -46,8 +46,11 @@ module.exports = function (socketio) {
 
     socket.connectedAt = new Date();
 
-    socket.on('dataUpdate',function(msg){
-     socket.broadcast.emit('changeGraph',{sockMsg:msg});
+    socket.on('dataAUpdate',function(msg){
+     socket.broadcast.emit('changeGraphA',{sockMsg:msg});
+    });
+    socket.on('dataBUpdate',function(msg){
+     socket.broadcast.emit('changeGraphB',{sockMsg:msg});
     });
 
     // Call onDisconnect.

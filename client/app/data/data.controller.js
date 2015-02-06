@@ -65,7 +65,7 @@ angular.module('serveMeApp')
 		var data = payload
 		data.forEach(function(d){
 			d.launchCount *= 100;
-			console.log("d",d);
+			// console.log("d",d);
 		})
 		// console.log(data);
 
@@ -90,9 +90,13 @@ angular.module('serveMeApp')
 	  dataSrv.scatterPlotDisplay('/api/tracelogs/',"JSON","#svg1",$scope.prepare_tracedata); 
 	 },200);	
 
-	 socket.socket.on('changeGraph',function(data){
+	 socket.socket.on('changeGraphA',function(data){
 	 	console.log("data recieved on update model ", data.sockMsg.data);
-	 	dataSrv.updateGraph('/api/tracelogs/',"JSON","#svg3",$scope.prepare_tracedata);
+	 	dataSrv.updateGraphA('/api/tracelogs/',"JSON","#svg3",$scope.prepare_tracedata);
+	 });
+	 socket.socket.on('changeGraphB',function(data){
+	 	console.log("data recieved on update model ", data.sockMsg.data);
+	 	dataSrv.updateGraphB('/api/tracelogs/',"JSON","#svg3",$scope.prepare_tracedata);
 	 })
 
   //    socket.on('data', function(streamData) {
