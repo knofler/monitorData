@@ -571,7 +571,7 @@ $rootScope.scatterPlotDisplay = function (url,dataType,targetDiv,prepareData){
         // console.log(hovered)
         $rootScope.table.highlight(hovered);
       });   
-    },200)
+    },2000)
     };
 $rootScope.updateGraphA = function(url,dataType,targetDiv,prepareData){
  var data = ''; 
