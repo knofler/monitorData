@@ -88,7 +88,7 @@ angular.module('serveMeApp')
 
      setTimeout(function(){
 	  dataSrv.scatterPlotDisplay('/api/tracelogs/',"JSON","#svg1",$scope.prepare_tracedata); 
-	 },200);	
+	 },2000);	
 
 	 socket.socket.on('changeGraphA',function(data){
 	 	console.log("data recieved on update model ", data.sockMsg.data);

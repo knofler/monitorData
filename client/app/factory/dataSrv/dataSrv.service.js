@@ -600,7 +600,7 @@ $rootScope.updateGraphA = function(url,dataType,targetDiv,prepareData){
       // console.log(hovered)
    
     });   
-  },200)
+  },2000)
   }; 
 $rootScope.updateGraphB = function(url,dataType,targetDiv,prepareData){
  var data = ''; 
@@ -629,7 +629,7 @@ $rootScope.updateGraphB = function(url,dataType,targetDiv,prepareData){
       // console.log(hovered)
  
     });   
-  },200)
+  },2000)
   }; 
 
   
